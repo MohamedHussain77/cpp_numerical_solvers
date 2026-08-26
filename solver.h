@@ -39,6 +39,24 @@ class Solver_advection{
             }
             output.close();
         }
+        void solving_advection_Laxwendroff(){
+            u_old.copy_from(u);
+            std::ofstream output("solution_laxwendroff_advection.csv");
+            output << "t,x,u\n";
+            for (size_t i{0}; i<numsteps; ++i){
+                double time = delt * i;
+                for (size_t j{0}; j<mesh.get_numcells(); ++j){
+                    output << time << "," << mesh[j] << "," << u_old[j] << "\n";
+                }
+                for (size_t j{1}; j<(mesh.get_numcells()-1); ++j){
+                    u[j] = u_old[j] - ((0.5*cfl)*(u_old[j+1] - u_old[j-1]))+ ((0.5*cfl*cfl)*(u_old[j+1] - 2*u_old[j] + u_old[j-1]));                    
+                }
+            u[0]=0;
+            u[mesh.get_numcells()-1]=0;
+            u_old.swap_btw(u);    
+            }
+            output.close();
+        }
         int get_numsteps() const{
             return numsteps;
         }

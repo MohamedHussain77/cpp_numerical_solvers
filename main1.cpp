@@ -23,6 +23,6 @@ int main(){
     std::cout << "del x: " << mesh.get_delx() << std::endl;
     std::cout << "numsteps: " << solve.get_numsteps() << std::endl;
 
-    solve.solving_advection_firstorderupwind();
+    solve.solving_advection_Laxwendroff();
     return 0; 
 }
