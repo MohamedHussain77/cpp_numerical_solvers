@@ -30,7 +30,7 @@ class Solver_advection{
         
         void advection(){
             u_old.copy_from(u);
-            std::ofstream output("solution_ADVECTION_1.csv");
+            std::ofstream output("solution_ADVECTION_sine.csv");
             output << "t,x,u\n";
             for (size_t i{0}; i<numsteps; ++i){
                 double time = delt * i;
