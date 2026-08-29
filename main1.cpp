@@ -36,7 +36,7 @@ int main(){
     //u_analytical.copy_from(u);
     //u.initialize_u_tophat();
     Field_u u_old(mesh);
-    Laxfriedrichs laxfriedrichs (u, u_old);
+    Laxfriedrichs laxfriedrichs (u, u_old, a, cfl*mesh.get_delx()/std::abs(a), mesh.get_delx());
     Dirichlet left(u, 0, BoundarySide::Left, mesh.get_delx());
     Neumann right(u, 0, BoundarySide::Right, mesh.get_delx()); //alpha * u + beta du/dx = C 
 

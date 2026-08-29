@@ -38,9 +38,8 @@ class Solver_advection{
                 }
             for (size_t i{0}; i<numsteps; ++i){
                 //double time = delt * i;
-                for (size_t j{1}; j<(mesh.get_numcells()-1); ++j){
-                    method.solve(j,cfl);                    
-                }
+                method.solve();                    
+                
                 condition_left.apply();
                 condition_right.apply();
                 time += delt;
