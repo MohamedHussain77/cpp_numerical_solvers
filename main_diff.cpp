@@ -21,36 +21,36 @@
 #include "diffusion.h"
 #include "timestepper.h"
 #include "expliciteulerstepper.h"
-
+#include "diffusioncentraldiff.h"
 int main(){
     double L = 1;
     int numcells = 200;
     Mesh mesh(numcells, L);
 
-    double cfl = 0.5;
-    double a = 2.5;
+    double r = 0.4;
+    double nu = 0.01;
     double totaltime = 0.5;
     
     Field_u u(mesh);
-    TopHat tophat(u, mesh, 1, 0.2, 0.4);
-    tophat.initialize();
+    GaussianPulse gauss(u, mesh, 1, 0.5, 0.05);
+    gauss.initialize();
     //SineWave sine(u, mesh, 0.8, 4*std::numbers::pi,0,0);
     //sine.initialize();
     //Field_u u_analytical(mesh);
     //u_analytical.copy_from(u);
     //u.initialize_u_tophat();
     //Field_u u_old(mesh);
-    //Laxfriedrichs1D laxfriedrichs (u, mesh.get_delx(), a);
-    //upwind1D upwind(u, mesh.get_delx(), a);
-    Laxwendroff1D laxwendroff(u, mesh.get_delx(), a);
+    Diffusioncentraldiff1D diffcentraldiff (u, mesh.get_delx(), nu);
     Dirichlet left(u, 0, BoundarySide::Left, mesh.get_delx());
-    Neumann right(u, 0, BoundarySide::Right, mesh.get_delx()); //alpha * u + beta du/dx = C 
+    Dirichlet right(u, 0, BoundarySide::Right, mesh.get_delx()); //alpha * u + beta du/dx = C 
     ExplicitEulerStepper stepper;
 
 
-    Advection solve(mesh, u, a, cfl, totaltime, laxwendroff, stepper, left, right);
 
-    std::cout << "del x: " << mesh.get_delx() << std::endl;
+    Diffusion solve(mesh, u, nu, r, totaltime, diffcentraldiff, stepper,  left, right);
+
+
+    std::cout << "del x: " << mesh.get_delx() << std::endl; 
     //std::cout << "numsteps: " << solve.get_numsteps() << std::endl;
 
     solve.timeIntegrate();

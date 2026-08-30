@@ -1,21 +1,26 @@
-#include "field.h"
 #ifndef NUMERICALMETHOD_H
 #define NUMERICALMETHOD_H
 
-class NumericalMethod{
-    protected:
-        Field_u& u;
-        Field_u& u_old;
-        double a;
-        double delt;
-        double delx;
+#include "field.h"
+#include <vector>
 
-    public:   
-        NumericalMethod(Field_u& u_param, Field_u& u_old_param, double a_param, double delt_param, double delx_param):u(u_param),u_old(u_old_param), a(a_param),
-        delt(delt_param), delx(delx_param){}
-        virtual void solve()=0;  
-        
+class NumericalMethod {
+protected:
+    Field_u& u;
+    //std::vector<double>& rhs;
+    double dx;
 
+public:
+    NumericalMethod(Field_u& u_param,
+                    //std::vector<double>& rhs_param,
+                    double dx_param)
+        : u(u_param), dx(dx_param) {}
 
+    virtual ~NumericalMethod() = default;
+
+    // Compute RHS = L(u) at current time level.
+    // dt may be needed for some schemes (e.g. Lax–Wendroff).
+    virtual void apply(std::vector<double>& rhs, double dt) = 0;
 };
+
 #endif
