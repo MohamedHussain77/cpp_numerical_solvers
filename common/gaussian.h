@@ -11,7 +11,7 @@ class GaussianPulse: public InitialCondition {
         double w; //width
         
     public:
-        GaussianPulse(Field_u& u_param, Mesh& mesh_param, double Amp_param, double xc_param, double w_param):InitialCondition(u_param, mesh_param), Amp(Amp_param), 
+        GaussianPulse(Field& u_param, Mesh& mesh_param, double Amp_param, double xc_param, double w_param):InitialCondition(u_param, mesh_param), Amp(Amp_param), 
         xc(xc_param), w(w_param){}
 
         virtual void initialize() override{

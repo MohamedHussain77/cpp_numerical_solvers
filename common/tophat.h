@@ -8,7 +8,7 @@ class TopHat: public InitialCondition {
         double xL; //left edge
         double xR; //right edge
     public:
-        TopHat(Field_u& u_param, Mesh& mesh_param, double Amp_param, double xL_param, double xR_param):InitialCondition(u_param, mesh_param), Amp(Amp_param), 
+        TopHat(Field& u_param, Mesh& mesh_param, double Amp_param, double xL_param, double xR_param):InitialCondition(u_param, mesh_param), Amp(Amp_param), 
         xL(xL_param), xR(xR_param){}
 
         virtual void initialize() override{

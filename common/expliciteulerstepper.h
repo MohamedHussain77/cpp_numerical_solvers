@@ -5,7 +5,7 @@
 #include <vector>
 class ExplicitEulerStepper: public TimeStepper{
     public:
-    virtual void step(Field_u& u,
+    virtual void step(Field& u,
                       std::vector<double>& rhs,
                       double dt) override {
                         for (size_t i{1}; i<(u.size()-1);++i){

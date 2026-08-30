@@ -12,7 +12,7 @@ class Advection : public Solver{
 
 
     public:
-        Advection( const Mesh& mesh_param, Field_u& u_param, double a_param, double cfl_param, double totaltime_param, NumericalMethod& method_param, TimeStepper& stepper_,
+        Advection( const Mesh& mesh_param, Field& u_param, double a_param, double cfl_param, double totaltime_param, NumericalMethod& method_param, TimeStepper& stepper_,
              BoundaryCondition& condition_param_l, BoundaryCondition& condition_param_r ) : Solver(mesh_param, u_param, totaltime_param, method_param, stepper_, condition_param_l, condition_param_r ), a(a_param), cfl(cfl_param) {}
             
 };

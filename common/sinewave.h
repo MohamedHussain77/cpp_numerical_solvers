@@ -11,7 +11,7 @@ class SineWave: public InitialCondition {
         double phi; //phase angle in radians
         double offset; //offset
     public:
-        SineWave(Field_u& u_param, Mesh& mesh_param, double Amp_param, double k_param, double phi_param, double offset_param):InitialCondition(u_param, mesh_param), Amp(Amp_param), 
+        SineWave(Field& u_param, Mesh& mesh_param, double Amp_param, double k_param, double phi_param, double offset_param):InitialCondition(u_param, mesh_param), Amp(Amp_param), 
         k(k_param), phi(phi_param), offset(offset_param){}
 
         virtual void initialize() override{

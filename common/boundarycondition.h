@@ -8,14 +8,14 @@ enum class BoundarySide {
 
 class BoundaryCondition{
     protected:
-        Field_u& u;
+        Field& u;
         double C;
         BoundarySide side;
         double delx;
         
 
     public:
-        BoundaryCondition(Field_u& u_param, double C_param, BoundarySide side_param, double delx_param): u(u_param), C(C_param), side(side_param), delx(delx_param){}
+        BoundaryCondition(Field& u_param, double C_param, BoundarySide side_param, double delx_param): u(u_param), C(C_param), side(side_param), delx(delx_param){}
         virtual void apply()=0;
 
 };

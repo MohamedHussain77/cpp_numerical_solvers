@@ -7,7 +7,7 @@ class Robin: public BoundaryCondition{
         double alpha;
         double beta;
     public:
-        Robin(Field_u& u_param, double C_param, BoundarySide side_param, double delx_param, double alpha_param, double beta_param):BoundaryCondition(u_param,C_param,side_param, delx_param), alpha(alpha_param), beta(beta_param){}
+        Robin(Field& u_param, double C_param, BoundarySide side_param, double delx_param, double alpha_param, double beta_param):BoundaryCondition(u_param,C_param,side_param, delx_param), alpha(alpha_param), beta(beta_param){}
         virtual void apply() override{
             if(side == BoundarySide::Left){
                 u[0] = (C - (beta * u[1]/delx))/(alpha - (beta/delx));

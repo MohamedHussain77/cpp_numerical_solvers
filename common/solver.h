@@ -11,8 +11,8 @@
 class Solver{
     protected:
         const Mesh& mesh;
-        Field_u& u;
-        //Field_u& u_old;
+        Field& u;
+        //Field& u_old;
         //double a;
         //double cfl;
         //double delt;
@@ -28,7 +28,7 @@ class Solver{
 
     public:
         
-        Solver(const Mesh& mesh_param,Field_u& u_param, //Field_u& u_old_param, 
+        Solver(const Mesh& mesh_param,Field& u_param, //Field& u_old_param, 
             double totaltime_param, NumericalMethod& method_param, TimeStepper& stepper_, BoundaryCondition& condition_param_l, BoundaryCondition& condition_param_r): mesh(mesh_param),
             u(u_param), totaltime(totaltime_param), method(method_param), stepper(stepper_),condition_left(condition_param_l), condition_right(condition_param_r){}
         
@@ -38,7 +38,7 @@ class Solver{
             std::vector<double> rhs(mesh.get_numcells());
             //u_old.copy_from(u);
             double delt = getDeltaT();
-            std::ofstream output("solution_diff.csv");
+            std::ofstream output("solution.csv");
             double time = 0.0;
             output << "t,x,u\n";
             for (size_t j{0}; j<mesh.get_numcells(); ++j){
@@ -47,7 +47,7 @@ class Solver{
             while (time < totaltime){
                 double dt = std::min(delt, totaltime - time);
                
-                method.apply(rhs, dt);
+                method.apply(u, rhs, dt);
                 stepper.step(u, rhs, dt);    
                                
                 

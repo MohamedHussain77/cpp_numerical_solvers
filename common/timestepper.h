@@ -5,7 +5,7 @@
 class TimeStepper{
     public:
     virtual ~TimeStepper() = default;
-    virtual void step(Field_u& u,
+    virtual void step(Field& u,
                       std::vector<double>& rhs,
                       double dt) = 0;
 };

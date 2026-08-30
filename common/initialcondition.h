@@ -4,10 +4,10 @@
 #define INITIALCONDITION_H
 class InitialCondition{
     protected:
-        Field_u& u;
+        Field& u;
         Mesh& mesh;
     public:
-        InitialCondition(Field_u& u_param, Mesh& mesh_param): u(u_param), mesh(mesh_param){}
+        InitialCondition(Field& u_param, Mesh& mesh_param): u(u_param), mesh(mesh_param){}
         virtual void initialize() = 0;
 };
 #endif
