@@ -49,7 +49,7 @@ class Solver{
         virtual void timeIntegrate(){
             std::vector<ConservedState1D> rhs(mesh.get_numcells());
             std::vector<EulerFlux1D> F(mesh.get_numcells()+1);
-            std::ofstream output("solution_hllc.csv");
+            std::ofstream output(string);
             double time = 0.0;
             output << "t,x,rho,u,p\n";
             for (size_t j{0}; j<mesh.get_numcells(); ++j){
