@@ -12,6 +12,12 @@ struct EulerFlux1D{
         momentumFlux + other.momentumFlux,
         energyFlux + other.energyFlux};
     }
+    EulerFlux1D operator+(const ConservedState1D& other) const {
+        return{
+        massFlux + other.rho,
+        momentumFlux + other.rhou,
+        energyFlux + other.rhoE};
+    }
     EulerFlux1D operator-(const EulerFlux1D& other) const  {
         return{
         massFlux - other.massFlux,

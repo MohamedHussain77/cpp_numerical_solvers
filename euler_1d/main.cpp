@@ -12,12 +12,15 @@
 #include "numericalmethod.h"
 #include "solver.h"
 #include "rk2stepper.h"
-
+#include "roeflux.h"
+#include "laxfriedrichsflux.h"
+#include "hllcflux.h"
+//#include "numericalmethod.h"
 
 int main(){
     double L = 1;
-    int numcells = 200;
-    double totaltime = 0.1;
+    int numcells = 250;
+    double totaltime = 0.2;
     double cfl_max = 0.5;
 
     Mesh mesh(numcells, L);
@@ -35,11 +38,14 @@ int main(){
     zeroGradient left(BoundarySide::Left);
     zeroGradient right(BoundarySide::Right);
 
-    LaxFriedrichsFlux flux(mesh.get_delx(),gamma);
+    //LaxFriedrichsFlux flux(mesh.get_delx(),gamma);
+    //RoeFlux flux(gamma);
+    HLLCFlux flux(gamma);
     NumericalMethod method(mesh, flux, left, right);
     RK2Stepper stepper(method);
+    std::string filename("solution_hllc.csv");
 
-    Solver Euler(mesh, U, cfl_max, gamma, totaltime, flux, method, stepper, left, right);
+    Solver Euler(mesh, U, cfl_max, gamma, totaltime, flux, method, stepper, left, right, filename);
     Euler.timeIntegrate();
 
 

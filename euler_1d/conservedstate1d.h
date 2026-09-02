@@ -13,6 +13,9 @@ struct ConservedState1D{
     double soundspeed(double gamma) const {
         return std::sqrt((gamma*(gamma-1)/rho)*(rhoE - (0.5 * rhou * rhou / rho)));
     }
+    double enthalpy(double gamma) const {
+        return (gamma*rhoE/rho) - ((gamma-1)*0.5*rhou*rhou/(rho*rho));
+    }
     ConservedState1D operator-(const ConservedState1D& other) const  {
         return{
         rho - other.rho,
