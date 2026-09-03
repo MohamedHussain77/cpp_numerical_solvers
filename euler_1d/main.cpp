@@ -17,13 +17,13 @@
 #include "hllcflux.h"
 #include "reconstruction.h"
 #include "limiter.h"
-
+#include "shuosher.h"
 
 
 int main(){
     double L = 1;
-    int numcells = 250;
-    double totaltime = 0.2;
+    int numcells = 300;
+    double totaltime = 0.18;
     double cfl_max = 0.5;
 
     Mesh mesh(numcells, L);
@@ -35,7 +35,8 @@ int main(){
     //double p_internal = 1;
     double gamma = 1.4;
     //UniformInitialCondition initial(U, mesh, rho_internal, u_internal, p_internal, gamma);
-    SodShockTubeTest initial(U, mesh, 1, 0, 1, 0.5, 0.125, 0, 0.1, gamma);
+    //SodShockTubeTest initial(U, mesh, 1, 0, 1, 0.5, 0.125, 0, 0.1, gamma);
+    Shu_Osher_IC initial(U, mesh, gamma);
     initial.initialize();
 
     zeroGradient left(BoundarySide::Left);
@@ -48,7 +49,7 @@ int main(){
     Reconstruction reconstruct(vanleer);
     NumericalMethod method(mesh, flux, left, right, reconstruct);
     RK2Stepper stepper(method);
-    std::string filename("solution_hllc_vanleer.csv");
+    std::string filename("solution_shu_osher.csv");
 
     Solver Euler(mesh, U, cfl_max, gamma, totaltime, flux, method, stepper, left, right, filename);
     Euler.timeIntegrate();

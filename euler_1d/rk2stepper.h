@@ -15,11 +15,11 @@ class RK2Stepper: public TimeStepper{
                         Field U_bar(U);
                         std::vector<ConservedState1D> rhs_2 (U.size());
                         std::vector<EulerFlux1D> F_bar (U.size()+1);
-                        for (size_t i{1}; i<(U.size()-1);++i){
+                        for (size_t i{0}; i<(U.size());++i){
                             U_bar[i] = U[i] + (rhs[i]*dt);
                         } 
                         method.computeRHS(U_bar, F_bar, rhs_2, dt);
-                        for (size_t i{1}; i<(U.size()-1);++i){
+                        for (size_t i{0}; i<(U.size());++i){
                             U[i] = U[i] + ((rhs[i]+rhs_2[i])*0.5 * dt);}                    
                       }
 };

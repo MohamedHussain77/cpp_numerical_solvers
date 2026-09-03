@@ -2,6 +2,7 @@
 #define UNIFROMINITIALCONDITION_H
 #include "field.h"
 #include "mesh.h"
+#include <cmath>
 #include "initialcondition.h"
 
 class UniformInitialCondition : public InitialCondition{
