@@ -15,7 +15,10 @@
 #include "roeflux.h"
 #include "laxfriedrichsflux.h"
 #include "hllcflux.h"
-//#include "numericalmethod.h"
+#include "reconstruction.h"
+#include "limiter.h"
+
+
 
 int main(){
     double L = 1;
@@ -41,9 +44,11 @@ int main(){
     //LaxFriedrichsFlux flux(mesh.get_delx(),gamma);
     //RoeFlux flux(gamma);
     HLLCFlux flux(gamma);
-    NumericalMethod method(mesh, flux, left, right);
+    VanLeer vanleer;
+    Reconstruction reconstruct(vanleer);
+    NumericalMethod method(mesh, flux, left, right, reconstruct);
     RK2Stepper stepper(method);
-    std::string filename("solution_hllc.csv");
+    std::string filename("solution_hllc_vanleer.csv");
 
     Solver Euler(mesh, U, cfl_max, gamma, totaltime, flux, method, stepper, left, right, filename);
     Euler.timeIntegrate();

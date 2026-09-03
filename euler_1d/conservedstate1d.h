@@ -1,5 +1,10 @@
 #pragma once
 #include <cmath>
+#include <cmath>
+#include <algorithm>
+
+
+
 struct ConservedState1D{
     double rho;
     double rhou;
@@ -28,11 +33,33 @@ struct ConservedState1D{
         rhou + other.rhou,
         rhoE + other.rhoE};
     }
+    ConservedState1D operator/(const ConservedState1D& other) const  {
+        return{
+        rho / other.rho,
+        rhou / other.rhou,
+        rhoE / other.rhoE};
+    }
+    ConservedState1D operator*(const ConservedState1D& other) const  {
+        return{
+        rho * other.rho,
+        rhou * other.rhou,
+        rhoE * other.rhoE};
+    }
     ConservedState1D operator*(double scalar) const {
         return{
         rho * scalar,
         rhou * scalar,
         rhoE * scalar};
     }
+    ConservedState1D abs () const {
+        return
+        {
+            std::abs(rho),
+            std::abs(rhou),
+            std::abs(rhoE)
+        };
+    }
+    
+    
 
 };
